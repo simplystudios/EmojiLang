@@ -28,8 +28,6 @@
         { name: "Launch Day", date: "30-7", emoji: "🎉"}
     ];
 
-    const backgroundEmojis = ["✨", "🌟", "⭐", "💫", "🌠", "🎈", "🎉", "🎊"];
-
     onMount(async() => {
         const today = new Date();
         const currentdate = `${today.getDate()}-${today.getMonth()}`
@@ -60,26 +58,7 @@
             navigator.clipboard.writeText(texttocopy);
             alert("Copied to clipboard!");
         }
-
-        createScatteredEmojis();
     });
-
-    function createScatteredEmojis() {
-        const container = document.createElement('div');
-        container.className = 'scattered-emojis';
-        document.body.appendChild(container);
-
-        for (let i = 0; i < 30; i++) {
-            const emoji = document.createElement('span');
-            emoji.className = 'scattered-emoji';
-            emoji.textContent = backgroundEmojis[Math.floor(Math.random() * backgroundEmojis.length)];
-            emoji.style.left = Math.random() * 100 + 'vw';
-            emoji.style.top = Math.random() * 100 + 'vh';
-            emoji.style.fontSize = (Math.random() * 30 + 20) + 'px';
-            emoji.style.transform = `rotate(${Math.random() * 360}deg)`;
-            container.appendChild(emoji);
-        }
-    }
 
     function convert2moji() {
         if (inp.trim() === '') {
@@ -99,8 +78,6 @@
         }
     }
 </script>
-
-<div class="scattered-emojis"></div>
 
 <div class="main">
     <div class="search-container">
@@ -168,33 +145,12 @@
         box-sizing: border-box;
     }
 
-    .scattered-emojis {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: 0;
-        overflow: hidden;
-    }
-
-    .scattered-emoji {
-        position: absolute;
-        opacity: 0.15;
-        transition: opacity 0.3s ease;
-        filter: blur(1px);
-    }
-
     .main {
         min-height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: center;
         padding: 20px;
-        position: relative;
-        z-index: 1;
-        backdrop-filter: blur(8px);
     }
 
     .search-container {
@@ -202,11 +158,6 @@
         max-width: 600px;
         margin-top: 100px;
         text-align: center;
-        background: rgba(255, 255, 255, 0.1);
-        padding: 2rem;
-        border-radius: 16px;
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(5px);
     }
 
     .logo {
@@ -237,17 +188,15 @@
         border-radius: 24px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         transition: all 0.3s ease;
-        background: rgba(255, 255, 255, 0.9);
     }
 
     .search-input:focus {
         outline: none;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        background: white;
     }
 
     .results-container {
-        background: rgba(255, 255, 255, 0.9);
+        background: white;
         border-radius: 12px;
         padding: 20px;
         margin-top: 20px;
