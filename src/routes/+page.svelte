@@ -28,6 +28,8 @@
         { name: "Launch Day", date: "30-7", emoji: "🎉"}
     ];
 
+    const backgroundEmojis = ["✨", "🌟", "⭐", "💫", "🌠", "🎈", "🎉", "🎊"];
+
     onMount(async() => {
         const today = new Date();
         const currentdate = `${today.getDate()}-${today.getMonth()}`
@@ -58,7 +60,28 @@
             navigator.clipboard.writeText(texttocopy);
             alert("Copied to clipboard!");
         }
+
+        // Create falling emojis
+        createFallingEmojis();
     });
+
+    function createFallingEmojis() {
+        const container = document.createElement('div');
+        container.className = 'falling-emojis';
+        document.body.appendChild(container);
+
+        for (let i = 0; i < 50; i++) {
+            const emoji = document.createElement('span');
+            emoji.className = 'falling-emoji';
+            emoji.textContent = backgroundEmojis[Math.floor(Math.random() * backgroundEmojis.length)];
+            emoji.style.left = Math.random() * 100 + 'vw';
+            emoji.style.animationDuration = (Math.random() * 20 + 10) + 's';
+            emoji.style.animationDelay = (Math.random() * 20) + 's';
+            emoji.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            emoji.style.transform = `rotate(${Math.random() * 360}deg)`;
+            container.appendChild(emoji);
+        }
+    }
 
     function convert2moji() {
         if (inp.trim() === '') {
@@ -78,6 +101,8 @@
         }
     }
 </script>
+
+<div class="falling-emojis"></div>
 
 <div class="main">
     <div class="search-container">
@@ -145,12 +170,43 @@
         box-sizing: border-box;
     }
 
+    .falling-emojis {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+        overflow: hidden;
+    }
+
+    .falling-emoji {
+        position: absolute;
+        top: -20px;
+        animation: fall linear infinite;
+        opacity: 0.5;
+    }
+
+    @keyframes fall {
+        0% {
+            transform: translateY(-20vh) rotate(0deg);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(100vh) rotate(360deg);
+            opacity: 0;
+        }
+    }
+
     .main {
         min-height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: center;
         padding: 20px;
+        position: relative;
+        z-index: 1;
     }
 
     .search-container {
