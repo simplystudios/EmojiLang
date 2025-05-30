@@ -61,23 +61,21 @@
             alert("Copied to clipboard!");
         }
 
-        // Create falling emojis
-        createFallingEmojis();
+        createScatteredEmojis();
     });
 
-    function createFallingEmojis() {
+    function createScatteredEmojis() {
         const container = document.createElement('div');
-        container.className = 'falling-emojis';
+        container.className = 'scattered-emojis';
         document.body.appendChild(container);
 
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 30; i++) {
             const emoji = document.createElement('span');
-            emoji.className = 'falling-emoji';
+            emoji.className = 'scattered-emoji';
             emoji.textContent = backgroundEmojis[Math.floor(Math.random() * backgroundEmojis.length)];
             emoji.style.left = Math.random() * 100 + 'vw';
-            emoji.style.animationDuration = (Math.random() * 20 + 10) + 's';
-            emoji.style.animationDelay = (Math.random() * 20) + 's';
-            emoji.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            emoji.style.top = Math.random() * 100 + 'vh';
+            emoji.style.fontSize = (Math.random() * 30 + 20) + 'px';
             emoji.style.transform = `rotate(${Math.random() * 360}deg)`;
             container.appendChild(emoji);
         }
@@ -102,7 +100,7 @@
     }
 </script>
 
-<div class="falling-emojis"></div>
+<div class="scattered-emojis"></div>
 
 <div class="main">
     <div class="search-container">
@@ -170,7 +168,7 @@
         box-sizing: border-box;
     }
 
-    .falling-emojis {
+    .scattered-emojis {
         position: fixed;
         top: 0;
         left: 0;
@@ -181,22 +179,11 @@
         overflow: hidden;
     }
 
-    .falling-emoji {
+    .scattered-emoji {
         position: absolute;
-        top: -20px;
-        animation: fall linear infinite;
-        opacity: 0.5;
-    }
-
-    @keyframes fall {
-        0% {
-            transform: translateY(-20vh) rotate(0deg);
-            opacity: 1;
-        }
-        100% {
-            transform: translateY(100vh) rotate(360deg);
-            opacity: 0;
-        }
+        opacity: 0.15;
+        transition: opacity 0.3s ease;
+        filter: blur(1px);
     }
 
     .main {
@@ -207,6 +194,7 @@
         padding: 20px;
         position: relative;
         z-index: 1;
+        backdrop-filter: blur(8px);
     }
 
     .search-container {
@@ -214,6 +202,11 @@
         max-width: 600px;
         margin-top: 100px;
         text-align: center;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 2rem;
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(5px);
     }
 
     .logo {
@@ -244,15 +237,17 @@
         border-radius: 24px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.9);
     }
 
     .search-input:focus {
         outline: none;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        background: white;
     }
 
     .results-container {
-        background: white;
+        background: rgba(255, 255, 255, 0.9);
         border-radius: 12px;
         padding: 20px;
         margin-top: 20px;
